@@ -1,19 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pixel Drawer</title>
+  <title>Pixel Canvas</title>
   <style>
     #canvas {
       border: 1px solid black;
-      background-color: white;
+      touch-action: none;
     }
   </style>
 </head>
 <body>
-  <input type="color" id="color-picker" value="#000000">
-  <canvas id="canvas" width="500" height="500"></canvas>
-  <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+  <canvas id="canvas" width="5000" height="5000"></canvas>
+  <input type="color" id="color-picker">
 
+  <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var colorPicker = document.getElementById('color-picker');
+    var gridSize = 10;
+
+    function drawPixel(x, y, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, gridSize, gridSize);
+    }
+
+    // Load pixel data from localStorage
+    var pixelDataString = localStorage.getItem('pixelData');
+    if (pixelDataString) {
+      var pixelData = JSON.parse(pixelDataString);
+      pixelData.forEach(pixel => {
+        drawPixel(pixel.x, pixel.y, pixel.color);
+      });
+    } else {
+      pixelData = [];
+    }
+
+    // Handle drawing
+    canvas.addEventListener('click', function(e) {
+      // Calculate the grid position
+      var rect = canvas.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+
+      var gridX = Math.floor(x / gridSize) * gridSize;
+      var gridY = Math.floor(y / gridSize) * gridSize;
+
+      // Draw pixel on canvas
+      drawPixel(gridX, gridY, colorPicker.value);
+
+      // Store pixel in array
+      pixelData.push({
+        x: gridX,
+        y: gridY,
+        color: colorPicker.value
+      });
+
+      // Save pixel data in localStorage
+      localStorage.setItem('pixelData', JSON.stringify(pixelData));
+    });
+
+  </script>
 </body>
 </html>
