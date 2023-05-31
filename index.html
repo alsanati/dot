@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Pixel Canvas</title>
@@ -47,7 +48,8 @@
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .delete-button {
+    .delete-button,
+    .screenshot-button {
       margin-left: 10px;
       padding: 10px 20px;
       background-color: #e0e0e0;
@@ -59,7 +61,8 @@
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .delete-button:hover {
+    .delete-button:hover,
+    .screenshot-button:hover {
       background-color: #d0d0d0;
     }
 
@@ -82,6 +85,7 @@
     <div class="controls">
       <input type="color" id="color-picker">
       <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
+      <button class="screenshot-button" onclick="captureScreenshot()">Take Screenshot</button>
     </div>
   </div>
 
@@ -154,6 +158,14 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       pixelData = [];
       localStorage.removeItem('pixelData');
+    }
+
+    // Function to capture a screenshot of the canvas
+    function captureScreenshot() {
+      var link = document.createElement('a');
+      link.href = canvas.toDataURL();
+      link.download = 'screenshot.png';
+      link.click();
     }
   </script>
 </body>
