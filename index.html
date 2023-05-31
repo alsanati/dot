@@ -49,7 +49,8 @@
     }
 
     .delete-button,
-    .screenshot-button {
+    .screenshot-button,
+    .eraser-button {
       margin-left: 10px;
       padding: 10px 20px;
       background-color: #e0e0e0;
@@ -62,7 +63,8 @@
     }
 
     .delete-button:hover,
-    .screenshot-button:hover {
+    .screenshot-button:hover,
+    .eraser-button:hover {
       background-color: #d0d0d0;
     }
 
@@ -86,6 +88,7 @@
       <input type="color" id="color-picker">
       <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
       <button class="screenshot-button" onclick="captureScreenshot()">Take Screenshot</button>
+      <button class="eraser-button" onclick="activateEraser()">Eraser</button>
     </div>
   </div>
 
@@ -94,10 +97,15 @@
     var ctx = canvas.getContext('2d');
     var colorPicker = document.getElementById('color-picker');
     var gridSize = 10;
+    var eraserActive = false;
 
     function drawPixel(x, y, color) {
       ctx.fillStyle = color;
       ctx.fillRect(x, y, gridSize, gridSize);
+    }
+
+    function erasePixel(x, y) {
+      ctx.clearRect(x, y, gridSize, gridSize);
     }
 
     // Load pixel data from localStorage
@@ -135,18 +143,26 @@
       var gridX = Math.floor(canvasX / gridSize) * gridSize;
       var gridY = Math.floor(canvasY / gridSize) * gridSize;
 
-      // Draw pixel on canvas
-      drawPixel(gridX, gridY, colorPicker.value);
+      if (eraserActive) {
+        erasePixel(gridX, gridY);
 
-      // Store pixel in array
-      pixelData.push({
-        x: gridX,
-        y: gridY,
-        color: colorPicker.value
-      });
+        // Remove erased pixel from pixelData array
+        pixelData = pixelData.filter(pixel => pixel.x !== gridX || pixel.y !== gridY);
+        localStorage.setItem('pixelData', JSON.stringify(pixelData));
+      } else {
+        // Draw pixel on canvas
+        drawPixel(gridX, gridY, colorPicker.value);
 
-      // Save pixel data in localStorage
-      localStorage.setItem('pixelData', JSON.stringify(pixelData));
+        // Store pixel in array
+        pixelData.push({
+          x: gridX,
+          y: gridY,
+          color: colorPicker.value
+        });
+
+        // Save pixel data in localStorage
+        localStorage.setItem('pixelData', JSON.stringify(pixelData));
+      }
     };
 
     // Add event listeners for both click and touch events
@@ -174,6 +190,11 @@
       link.href = tempCanvas.toDataURL();
       link.download = 'screenshot.png';
       link.click();
+    }
+
+    // Function to activate the eraser
+    function activateEraser() {
+      eraserActive = true;
     }
   </script>
 </body>
