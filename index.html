@@ -81,20 +81,29 @@
       pixelData = [];
     }
 
-    // Handle drawing for both click and touchstart events
+    // Handle drawing for both click and touch events
     var handleDrawing = function(e) {
       e.preventDefault();
 
-      // Calculate the grid position
+      var x, y;
+
+      if (e.type === 'click') {
+        x = e.clientX;
+        y = e.clientY;
+      } else if (e.type === 'touchstart') {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      }
+
       var rect = canvas.getBoundingClientRect();
       var scaleX = canvas.width / rect.width;
       var scaleY = canvas.height / rect.height;
 
-      var x = (e.clientX - rect.left) * scaleX;
-      var y = (e.clientY - rect.top) * scaleY;
+      var canvasX = (x - rect.left) * scaleX;
+      var canvasY = (y - rect.top) * scaleY;
 
-      var gridX = Math.floor(x / gridSize) * gridSize;
-      var gridY = Math.floor(y / gridSize) * gridSize;
+      var gridX = Math.floor(canvasX / gridSize) * gridSize;
+      var gridY = Math.floor(canvasY / gridSize) * gridSize;
 
       // Draw pixel on canvas
       drawPixel(gridX, gridY, colorPicker.value);
@@ -110,7 +119,7 @@
       localStorage.setItem('pixelData', JSON.stringify(pixelData));
     };
 
-    // Add event listeners for both click and touchstart events
+    // Add event listeners for both click and touch events
     canvas.addEventListener('click', handleDrawing);
     canvas.addEventListener('touchstart', handleDrawing);
 
