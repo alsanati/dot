@@ -31,6 +31,13 @@
       height: auto;
     }
 
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
     input[type="color"] {
       border: none;
       padding: 5px;
@@ -41,7 +48,7 @@
     }
 
     .delete-button {
-      margin-bottom: 10px;
+      margin-left: 10px;
       padding: 10px 20px;
       background-color: #e0e0e0;
       color: #333;
@@ -72,8 +79,10 @@
 <body>
   <div class="container">
     <canvas id="canvas" width="1080" height="1080"></canvas>
-    <input type="color" id="color-picker">
-    <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
+    <div class="controls">
+      <input type="color" id="color-picker">
+      <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
+    </div>
   </div>
 
   <script>
@@ -146,7 +155,6 @@
       pixelData = [];
       localStorage.removeItem('pixelData');
     }
-
   </script>
 </body>
 </html>
