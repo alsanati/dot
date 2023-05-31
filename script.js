@@ -3,6 +3,9 @@ window.onload = function() {
     var ctx = canvas.getContext('2d');
     var colorPicker = document.getElementById('color-picker');
     var gridSize = 10; // size of one grid cell
+
+    canvas.width = 5000;
+    canvas.height = 5000;
   
     canvas.addEventListener('click', function(e) {
       var rect = canvas.getBoundingClientRect();
