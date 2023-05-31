@@ -40,6 +40,10 @@
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     }
 
+    .delete-button {
+      margin-bottom: 10px;
+    }
+
     /* Media Queries for Responsive Layout */
 
     @media (max-width: 600px) {
@@ -57,6 +61,7 @@
   <div class="container">
     <canvas id="canvas" width="1080" height="1080"></canvas>
     <input type="color" id="color-picker">
+    <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
   </div>
 
   <script>
@@ -122,6 +127,13 @@
     // Add event listeners for both click and touch events
     canvas.addEventListener('click', handleDrawing);
     canvas.addEventListener('touchstart', handleDrawing);
+
+    // Function to delete the canvas and clear the pixel data
+    function deleteCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pixelData = [];
+      localStorage.removeItem('pixelData');
+    }
 
   </script>
 </body>
