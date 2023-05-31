@@ -81,8 +81,10 @@
       pixelData = [];
     }
 
-    // Handle drawing
-    canvas.addEventListener('click', function(e) {
+    // Handle drawing for both click and touchstart events
+    var handleDrawing = function(e) {
+      e.preventDefault();
+
       // Calculate the grid position
       var rect = canvas.getBoundingClientRect();
       var x = e.clientX - rect.left;
@@ -103,7 +105,11 @@
 
       // Save pixel data in localStorage
       localStorage.setItem('pixelData', JSON.stringify(pixelData));
-    });
+    };
+
+    // Add event listeners for both click and touchstart events
+    canvas.addEventListener('click', handleDrawing);
+    canvas.addEventListener('touchstart', handleDrawing);
 
   </script>
 </body>
