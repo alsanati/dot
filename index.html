@@ -87,8 +87,11 @@
 
       // Calculate the grid position
       var rect = canvas.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
+      var scaleX = canvas.width / rect.width;
+      var scaleY = canvas.height / rect.height;
+
+      var x = (e.clientX - rect.left) * scaleX;
+      var y = (e.clientY - rect.top) * scaleY;
 
       var gridX = Math.floor(x / gridSize) * gridSize;
       var gridY = Math.floor(y / gridSize) * gridSize;
