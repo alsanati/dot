@@ -20,11 +20,15 @@
       border-radius: 10px;
       background-color: white;
       box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      max-width: 600px;
+      width: 100%;
     }
 
     #canvas {
       border: 1px solid #e0e0e0;
       margin-bottom: 20px;
+      max-width: 100%;
+      height: auto;
     }
 
     input[type="color"] {
@@ -35,11 +39,23 @@
       border-radius: 5px;
       box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     }
+
+    /* Media Queries for Responsive Layout */
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      #canvas {
+        margin-bottom: 10px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <canvas id="canvas" width="5000" height="5000"></canvas>
+    <canvas id="canvas" width="1080" height="1080"></canvas>
     <input type="color" id="color-picker">
   </div>
 
