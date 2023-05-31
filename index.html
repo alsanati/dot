@@ -88,7 +88,7 @@
       <input type="color" id="color-picker">
       <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
       <button class="screenshot-button" onclick="captureScreenshot()">Take Screenshot</button>
-      <button class="eraser-button" onclick="activateEraser()">Eraser</button>
+      <button class="eraser-button" onclick="toggleEraser()">Eraser</button>
     </div>
   </div>
 
@@ -192,9 +192,13 @@
       link.click();
     }
 
-    // Function to activate the eraser
-    function activateEraser() {
-      eraserActive = true;
+    // Function to toggle the eraser functionality
+    function toggleEraser() {
+      eraserActive = !eraserActive;
+
+      // Update button text based on eraser state
+      var eraserButton = document.querySelector('.eraser-button');
+      eraserButton.textContent = eraserActive ? 'Stop Eraser' : 'Eraser';
     }
   </script>
 </body>
