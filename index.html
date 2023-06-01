@@ -200,9 +200,11 @@ function redo() {
       drawPixel(Math.floor(canvasX), Math.floor(canvasY), colorPicker.value);
     }
 
-    function stopDrawing() {
-      drawing = false;
-    }
+function stopDrawing() {
+  drawing = false;
+  stateStack[++currentStateIndex] = canvas.toDataURL();
+  // When a new state is added, we need to delete all
+
 
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
