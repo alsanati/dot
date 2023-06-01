@@ -80,31 +80,36 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <canvas id="canvas" width="1080" height="1080"></canvas>
-    <div class="controls">
-      <input type="color" id="color-picker">
-      <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
-      <button class="screenshot-button" onclick="captureScreenshot()">Take Screenshot</button>
-    </div>
-  </div>
+<div class="controls">
+    <input type="color" id="color-picker">
+    <select id="grid-size-picker">
+        <option value="108">10x10 Grid</option>
+        <option value="54">20x20 Grid</option>
+        <option value="27">40x40 Grid</option>
+    </select>
+    <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
+    <button class="screenshot-button" onclick="captureScreenshot()">Take Screenshot</button>
+</div>
+
 
   <script>
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    var colorPicker = document.getElementById('color-picker');
-    var drawing = false;
-      var gridSize = 108;  // Define the grid size here
-
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var colorPicker = document.getElementById('color-picker');
+var gridSizePicker = document.getElementById('grid-size-picker');
+var drawing = false;
 
 function drawPixel(x, y, color) {
-  // Calculate grid position
+  // Use the selected grid size
+  var gridSize = parseInt(gridSizePicker.value);
+
   var gridX = Math.floor(x / gridSize) * gridSize;
   var gridY = Math.floor(y / gridSize) * gridSize;
 
   ctx.fillStyle = color;
   ctx.fillRect(gridX, gridY, gridSize, gridSize);
 }
+
 
 
     function startDrawing(e) {
