@@ -117,6 +117,9 @@ var ctx = canvas.getContext('2d');
 var colorPicker = document.getElementById('color-picker');
 var gridSizePicker = document.getElementById('grid-size-picker');
 var drawing = false;
+    var stateStack = [canvas.toDataURL()];
+var currentStateIndex = 0;
+
 
 function drawPixel(x, y, color) {
   // Use the selected grid size
