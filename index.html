@@ -65,6 +65,19 @@
     .screenshot-button:hover {
       background-color: #d0d0d0;
     }
+    #grid-size-picker {
+  border: none;
+  padding: 5px;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  background: #fff; // optional: set a background color
+  color: #333; // optional: set a text color
+  font-size: 16px; // optional: set a font size
+  margin-left: 10px; // add some space between the color picker and the grid size picker
+}
+
 
     /* Media Queries for Responsive Layout */
 
@@ -84,7 +97,7 @@
   <canvas id="canvas" width="1080" height="1080"></canvas>
 <div class="controls">
     <input type="color" id="color-picker">
-    <select id="grid-size-picker">
+  <select id="grid-size-picker">
         <option value="108">10x10 Grid</option>
         <option value="54">20x20 Grid</option>
         <option value="27">40x40 Grid</option>
