@@ -102,10 +102,8 @@
         <option value="54">20x20 Grid</option>
         <option value="27">40x40 Grid</option>
     </select>
-    <button class="button" onclick="deleteCanvas()">Delete Canvas</button>
-    <button class="button" onclick="captureScreenshot()">Take Screenshot</button>
-  <button class="button" onclick="undo()">Undo</button>
-<button class="button" onclick="redo()">Redo</button>
+    <button class="delete-button" onclick="deleteCanvas()">Delete Canvas</button>
+    <button class="screenshot-button" onclick="captureScreenshot()">Take Screenshot</button>
 
 </div>
   </div>
@@ -117,8 +115,6 @@ var ctx = canvas.getContext('2d');
 var colorPicker = document.getElementById('color-picker');
 var gridSizePicker = document.getElementById('grid-size-picker');
 var drawing = false;
-    var stateStack = [canvas.toDataURL()];
-var currentStateIndex = 0;
 
 
 function drawPixel(x, y, color) {
@@ -132,29 +128,8 @@ function drawPixel(x, y, color) {
   ctx.fillRect(gridX, gridY, gridSize, gridSize);
 }
 
-function undo() {
-  if (currentStateIndex > 0) {
-    currentStateIndex--;
-    var img = new Image();
-    img.src = stateStack[currentStateIndex];
-    img.onload = function () {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    };
-  }
-}
 
-function redo() {
-  if (currentStateIndex < stateStack.length - 1) {
-    currentStateIndex++;
-    var img = new Image();
-    img.src = stateStack[currentStateIndex];
-    img.onload = function () {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    };
-  }
-}
+
 
 
     function startDrawing(e) {
@@ -202,8 +177,7 @@ function redo() {
 
 function stopDrawing() {
   drawing = false;
-  stateStack[++currentStateIndex] = canvas.toDataURL();
-  // When a new state is added, we need to delete all
+}
 
 
     canvas.addEventListener('mousedown', startDrawing);
